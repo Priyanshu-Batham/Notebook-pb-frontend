@@ -11,15 +11,28 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteNote, updateNote } from "../store/noteSlice";
 
-const Note = ({title, desc, noteId, _id}) => {
+const Note = ({ title, desc, noteId, _id, showAlert }) => {
   const dispatch = useDispatch();
   const [updateTitle, setUpdateTitle] = useState(title);
   const [updateDesc, setUpdateDesc] = useState(desc);
-
+  const handleSubmit = () => {
+    if (updateTitle.length < 1 || updateDesc.length < 1) {
+      showAlert("Title and Description cannot be Empty", "red");
+    } else {
+      dispatch(
+        updateNote({
+          noteId: noteId,
+          _id: _id,
+          title: updateTitle,
+          desc: updateDesc,
+        })
+      );
+    }
+  };
 
   return (
     <Box width="150px" m="2">
@@ -27,7 +40,11 @@ const Note = ({title, desc, noteId, _id}) => {
         <Dialog.Root>
           <Dialog.Trigger>
             <IconButton size="1" variant="outline">
-              <Pencil2Icon width="15" height="15"  style={{cursor:"pointer"}}/>
+              <Pencil2Icon
+                width="15"
+                height="15"
+                style={{ cursor: "pointer" }}
+              />
             </IconButton>
           </Dialog.Trigger>
 
@@ -43,7 +60,7 @@ const Note = ({title, desc, noteId, _id}) => {
                 </Text>
                 <TextField.Root
                   value={updateTitle}
-                  onChange={(e)=> setUpdateTitle(e.target.value)}
+                  onChange={(e) => setUpdateTitle(e.target.value)}
                   placeholder="Enter your Title"
                 />
               </label>
@@ -53,7 +70,7 @@ const Note = ({title, desc, noteId, _id}) => {
                 </Text>
                 <TextArea
                   value={updateDesc}
-                  onChange={(e)=> setUpdateDesc(e.target.value)}
+                  onChange={(e) => setUpdateDesc(e.target.value)}
                   placeholder="Enter your Description"
                 />
               </label>
@@ -65,18 +82,16 @@ const Note = ({title, desc, noteId, _id}) => {
                 </Button>
               </Dialog.Close>
               <Dialog.Close>
-                <Button onClick={()=> dispatch(updateNote({noteId: noteId, _id: _id, title: updateTitle, desc: updateDesc}))
-                }>Save</Button>
+                <Button onClick={handleSubmit}>Save</Button>
               </Dialog.Close>
             </Flex>
           </Dialog.Content>
         </Dialog.Root>
 
-
         <Dialog.Root>
           <Dialog.Trigger>
             <IconButton size="1" variant="outline" mx="4">
-              <TrashIcon width="15" height="15" style={{cursor:"pointer"}}/>
+              <TrashIcon width="15" height="15" style={{ cursor: "pointer" }} />
             </IconButton>
           </Dialog.Trigger>
 
@@ -90,9 +105,13 @@ const Note = ({title, desc, noteId, _id}) => {
                 </Button>
               </Dialog.Close>
               <Dialog.Close>
-                <Button onClick={()=>{
-                  dispatch(deleteNote({noteId, _id}))
-                }}>Delete</Button>
+                <Button
+                  onClick={() => {
+                    dispatch(deleteNote({ noteId, _id }));
+                  }}
+                >
+                  Delete
+                </Button>
               </Dialog.Close>
             </Flex>
           </Dialog.Content>

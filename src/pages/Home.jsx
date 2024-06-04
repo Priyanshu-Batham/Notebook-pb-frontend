@@ -1,5 +1,5 @@
-import { PlusCircledIcon } from "@radix-ui/react-icons";
-import { Box, Button, Heading, TextArea, TextField } from "@radix-ui/themes";
+import { ExclamationTriangleIcon, PlusCircledIcon } from "@radix-ui/react-icons";
+import { Box, Button, Callout, Heading, TextArea, TextField } from "@radix-ui/themes";
 import NotesContainer from "../components/NotesContainer";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,10 +59,17 @@ const Home = () => {
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [alert, setAlert] = useState("");
+
+  const showAlert = (msg, color) => {
+    setAlert({ msg, color });
+    setTimeout(() => setAlert(""), 2000);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title.length < 5 || desc.length < 5) {
-      alert("Input at least 5 characters");
+    if (title.length < 1 || desc.length < 1) {
+      showAlert("Title And Description Should Not be Empty", "red")
       return;
     }
     dispatch(createNote({ title: title, desc: desc }));
@@ -72,9 +79,23 @@ const Home = () => {
 
   return (
     <>
-    {isLoading && <Loader />}
+      {/* showing alert on some error */}
+      {alert && (
+        <Callout.Root
+          color={alert.color}
+          role="alert"
+          style={{ position: "fixed", left: 0, width: "100%" }}
+        >
+          <Callout.Icon>
+            <ExclamationTriangleIcon />
+          </Callout.Icon>
+          <Callout.Text>{alert.msg}</Callout.Text>
+        </Callout.Root>
+      )}
 
-    {/* is not laoding then show home page content */}
+      {isLoading && <Loader />}
+
+      {/* is not laoding then show home page content */}
       {!isLoading && (
         <Box>
           <form onSubmit={handleSubmit}>
@@ -109,7 +130,7 @@ const Home = () => {
             </Button>
           </form>
 
-          <NotesContainer />
+          <NotesContainer showAlert={showAlert}/>
         </Box>
       )}
     </>

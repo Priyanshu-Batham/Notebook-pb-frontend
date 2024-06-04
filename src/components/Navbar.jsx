@@ -1,4 +1,4 @@
-import { RowsIcon } from "@radix-ui/react-icons";
+import { PinRightIcon, RowsIcon } from "@radix-ui/react-icons";
 import {
   Box,
   Flex,
@@ -87,7 +87,10 @@ const Navbar = () => {
             {isLoggedIn && (
               <Dialog.Root>
                 <Dialog.Trigger>
-                  <Button>Logout</Button>
+                  <Button size="2">
+                    Logout
+                    <PinRightIcon />
+                    </Button>
                 </Dialog.Trigger>
 
                 <Dialog.Content maxWidth="450px">
