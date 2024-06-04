@@ -5,7 +5,6 @@ import {
   Card,
   Flex,
   Heading,
-  Text,
   TextField,
 } from "@radix-ui/themes";
 import styled from "styled-components";
@@ -88,9 +87,9 @@ const Login = () => {
               <Heading align="center" size="8" mb="5">
                 Login
               </Heading>
-              <Text align="center">
+              <Heading align="center" size="4">
                 You will be redirected to the Home Page
-              </Text>
+              </Heading>
               <TextField.Root
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
