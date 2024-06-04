@@ -20,10 +20,11 @@ const Home = () => {
       const token = localStorage.getItem("authToken");
       //if token is not found then we redirect user to login page
       if (!token) {
-        navigate("/login");
+        navigate("/signup");
       }
       //if token is found then we fetch his notes
       else {
+        setIsLoading(true);
         const url = "https://notebook-pb-backend.onrender.com/note/read";
         fetch(url, {
           method: "POST",
@@ -52,7 +53,6 @@ const Home = () => {
           });
       }
     }
-    setIsLoading(false);
   }, []);
 
   const dispatch = useDispatch();
