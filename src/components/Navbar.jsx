@@ -8,10 +8,15 @@ import {
   DropdownMenu,
   Text,
   TabNav,
+  Dialog,
+  TextField,
 } from "@radix-ui/themes";
 import styled from "styled-components";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logOutUser } from "../store/noteSlice";
 
 const ResponsiveBox = styled(Box)`
   display: none;
@@ -27,7 +32,15 @@ const MyLink = styled(Link)`
 `;
 
 const Navbar = () => {
-  const location = useLocation()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.notes.isLoggedIn);
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+    dispatch(logOutUser());
+  };
   return (
     <>
       <Box>
@@ -38,24 +51,60 @@ const Navbar = () => {
             </Heading>
           </Box>
           <ResponsiveBox>
-            <TabNav.Root size="2">
-              <TabNav.Link asChild active={location.pathname === "/"}>
-                <Heading><MyLink to="/">Home</MyLink></Heading>
-              </TabNav.Link>
-              <TabNav.Link asChild active={location.pathname === "/about"}>
-                <Heading><MyLink to="/about">About</MyLink></Heading>
-              </TabNav.Link>
-            </TabNav.Root>
+            {/* if user is logged in */}
+            {isLoggedIn && (
+              <TabNav.Root size="2">
+                <TabNav.Link asChild active={location.pathname === "/"}>
+                  <Heading>
+                    <MyLink to="/">Home</MyLink>
+                  </Heading>
+                </TabNav.Link>
+                <TabNav.Link asChild active={location.pathname === "/about"}>
+                  <Heading>
+                    <MyLink to="/about">About</MyLink>
+                  </Heading>
+                </TabNav.Link>
+              </TabNav.Root>
+            )}
+
+            {/* if user is not logged in */}
+            {!isLoggedIn && (
+              <TabNav.Root size="2">
+                <TabNav.Link asChild active={location.pathname === "/login"}>
+                  <Heading>
+                    <MyLink to="/login">Login</MyLink>
+                  </Heading>
+                </TabNav.Link>
+                <TabNav.Link asChild active={location.pathname === "/signup"}>
+                  <Heading>
+                    <MyLink to="/signup">Signup</MyLink>
+                  </Heading>
+                </TabNav.Link>
+              </TabNav.Root>
+            )}
           </ResponsiveBox>
           <ResponsiveBox>
-            <Flex gap="3">
-              <Button variant="soft">
-                Log In
-              </Button>
-              <Button variant="solid">
-                Sign Up
-              </Button>
-            </Flex>
+            {isLoggedIn && (
+              <Dialog.Root>
+                <Dialog.Trigger>
+                  <Button>Logout</Button>
+                </Dialog.Trigger>
+
+                <Dialog.Content maxWidth="450px">
+                  <Dialog.Title>Are you sure to Logout?</Dialog.Title>
+                  <Flex gap="3" mt="4" justify="end">
+                    <Dialog.Close>
+                      <Button variant="soft" color="gray">
+                        Cancel
+                      </Button>
+                    </Dialog.Close>
+                    <Dialog.Close>
+                      <Button onClick={handleLogout}>Logout</Button>
+                    </Dialog.Close>
+                  </Flex>
+                </Dialog.Content>
+              </Dialog.Root>
+            )}
           </ResponsiveBox>
           <Box display={{ xs: "block", lg: "none" }}>
             <DropdownMenu.Root>
@@ -65,20 +114,55 @@ const Navbar = () => {
                 </IconButton>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content>
-                <DropdownMenu.Item>
-                  <Text>Log In</Text>
-                </DropdownMenu.Item>
-                <DropdownMenu.Item>
-                  <Text>Sign Up</Text>
-                </DropdownMenu.Item>
-                <DropdownMenu.Separator />
+                {!isLoggedIn && (
+                  <>
+                    <DropdownMenu.Item>
+                      <Text>
+                        <MyLink to="/login">Login</MyLink>
+                      </Text>
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item>
+                      <Text>
+                        <MyLink to="/signup">Signup</MyLink>
+                      </Text>
+                    </DropdownMenu.Item>
+                  </>
+                )}
 
-                <DropdownMenu.Item>
-                  <Text><MyLink to="/">Home</MyLink></Text>
-                </DropdownMenu.Item>
-                <DropdownMenu.Item>
-                  <Text><MyLink to="/about">About</MyLink></Text>
-                </DropdownMenu.Item>
+                {isLoggedIn && (
+                  <>
+                    <DropdownMenu.Item>
+                      <Text>
+                        <MyLink to="/">Home</MyLink>
+                      </Text>
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item>
+                      <Text>
+                        <MyLink to="/about">About</MyLink>
+                      </Text>
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Separator />
+                      <Dialog.Root>
+                        <Dialog.Trigger>
+                          <Button>Logout</Button>
+                        </Dialog.Trigger>
+
+                        <Dialog.Content maxWidth="450px">
+                          <Dialog.Title>Are you sure to Logout?</Dialog.Title>
+                          <Flex gap="3" mt="4" justify="end">
+                            <Dialog.Close>
+                              <Button variant="soft" color="gray">
+                                Cancel
+                              </Button>
+                            </Dialog.Close>
+                            <Dialog.Close>
+                              <Button onClick={handleLogout}>Logout</Button>
+                            </Dialog.Close>
+                          </Flex>
+                        </Dialog.Content>
+                      </Dialog.Root>
+                  </>
+                )}
               </DropdownMenu.Content>
             </DropdownMenu.Root>
           </Box>

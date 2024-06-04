@@ -10,9 +10,9 @@ const NotesContainer = () => {
 
   return (
     <Flex wrap="wrap" style={{marginTop: '50px'}}>
-      {notes.map((note, index)=>{
+      {notes.map((note)=>{
         return (
-          <Note title={note.title} desc={note.description} key={index}/>
+          <Note title={note.title} desc={note.description} key={note.noteId} noteId={note.noteId} _id={note._id} />
         )
       })}
     </Flex>

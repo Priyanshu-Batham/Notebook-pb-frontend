@@ -9,7 +9,7 @@ import { store } from "./store/store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Theme appearance="dark" accentColor="ruby" grayColor="gray">
+    <Theme appearance="dark" accentColor="crimson" grayColor="gray">
       <Provider store={store}>
         <BrowserRouter>
           <App />

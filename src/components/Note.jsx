@@ -8,13 +8,21 @@ import {
   Heading,
   IconButton,
   Text,
+  TextArea,
   TextField,
 } from "@radix-ui/themes";
-import React from "react";
+import React, {useState} from "react";
+import { useDispatch } from "react-redux";
+import { deleteNote, updateNote } from "../store/noteSlice";
 
-const Note = ({title, desc}) => {
+const Note = ({title, desc, noteId, _id}) => {
+  const dispatch = useDispatch();
+  const [updateTitle, setUpdateTitle] = useState(title);
+  const [updateDesc, setUpdateDesc] = useState(desc);
+
+
   return (
-    <Box width="200px" m="3">
+    <Box width="150px" m="2">
       <Card variant="surface" size="2">
         <Dialog.Root>
           <Dialog.Trigger>
@@ -34,17 +42,19 @@ const Note = ({title, desc}) => {
                   Title
                 </Text>
                 <TextField.Root
-                  defaultValue="Freja Johnsen"
-                  placeholder="Enter your full name"
+                  value={updateTitle}
+                  onChange={(e)=> setUpdateTitle(e.target.value)}
+                  placeholder="Enter your Title"
                 />
               </label>
               <label>
                 <Text as="div" size="2" mb="1" weight="bold">
                   Description
                 </Text>
-                <TextField.Root
-                  defaultValue="freja@example.com"
-                  placeholder="Enter your email"
+                <TextArea
+                  value={updateDesc}
+                  onChange={(e)=> setUpdateDesc(e.target.value)}
+                  placeholder="Enter your Description"
                 />
               </label>
             </Flex>
@@ -55,7 +65,8 @@ const Note = ({title, desc}) => {
                 </Button>
               </Dialog.Close>
               <Dialog.Close>
-                <Button>Save</Button>
+                <Button onClick={()=> dispatch(updateNote({noteId: noteId, _id: _id, title: updateTitle, desc: updateDesc}))
+                }>Save</Button>
               </Dialog.Close>
             </Flex>
           </Dialog.Content>
@@ -79,13 +90,15 @@ const Note = ({title, desc}) => {
                 </Button>
               </Dialog.Close>
               <Dialog.Close>
-                <Button>Delete</Button>
+                <Button onClick={()=>{
+                  dispatch(deleteNote({noteId, _id}))
+                }}>Delete</Button>
               </Dialog.Close>
             </Flex>
           </Dialog.Content>
         </Dialog.Root>
 
-        <Heading my="3">{title}t</Heading>
+        <Heading my="3">{title}</Heading>
         <Text as="div" color="gray" size="2">
           {desc}
         </Text>
