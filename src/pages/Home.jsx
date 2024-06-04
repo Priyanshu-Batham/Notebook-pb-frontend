@@ -11,7 +11,7 @@ import Loader from "../components/Loader";
 const Home = () => {
   const isLoggedIn = useSelector((state) => state.notes.isLoggedIn);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   // localStorage.setItem("authToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTZlNDA2ZjFhZDI0NTM4MDUzOTAxMiIsIm5hbWUiOiJwcml5YW5zaHUiLCJpYXQiOjE3MTczNDI2NjB9.QfsHQtsw16v3hpmRJPOwMGtS0OVz8WCNUvMB_pWlZ5g");
   useEffect(() => {
     //if user is logged in then we don't do anything else:
