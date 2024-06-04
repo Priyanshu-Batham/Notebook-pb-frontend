@@ -73,7 +73,7 @@ export const noteSlice = createSlice({
     },
 
     deleteNote: (state, action) => {
-      const {noteId, _id} = action.payload;
+      const { noteId, _id } = action.payload;
       const url = `https://notebook-pb-backend.onrender.com/note/delete${_id}`;
       const token = localStorage.getItem("authToken");
       fetch(url, {
@@ -95,14 +95,20 @@ export const noteSlice = createSlice({
       state.isLoggedIn = true;
     },
 
-    logOutUser: (state) =>{
+    logOutUser: (state) => {
       state.isLoggedIn = false;
-    }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { createNote, deleteNote, updateNote, setAllNotes, logInUser, logOutUser } =
-  noteSlice.actions;
+export const {
+  createNote,
+  deleteNote,
+  updateNote,
+  setAllNotes,
+  logInUser,
+  logOutUser,
+} = noteSlice.actions;
 
 export default noteSlice.reducer;

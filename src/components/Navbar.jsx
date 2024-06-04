@@ -38,8 +38,8 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.notes.isLoggedIn);
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
     dispatch(logOutUser());
+    navigate("/login");
   };
   return (
     <>
@@ -142,25 +142,25 @@ const Navbar = () => {
                       </Text>
                     </DropdownMenu.Item>
                     <DropdownMenu.Separator />
-                      <Dialog.Root>
-                        <Dialog.Trigger>
-                          <Button>Logout</Button>
-                        </Dialog.Trigger>
+                    <Dialog.Root>
+                      <Dialog.Trigger>
+                        <Button>Logout</Button>
+                      </Dialog.Trigger>
 
-                        <Dialog.Content maxWidth="450px">
-                          <Dialog.Title>Are you sure to Logout?</Dialog.Title>
-                          <Flex gap="3" mt="4" justify="end">
-                            <Dialog.Close>
-                              <Button variant="soft" color="gray">
-                                Cancel
-                              </Button>
-                            </Dialog.Close>
-                            <Dialog.Close>
-                              <Button onClick={handleLogout}>Logout</Button>
-                            </Dialog.Close>
-                          </Flex>
-                        </Dialog.Content>
-                      </Dialog.Root>
+                      <Dialog.Content maxWidth="450px">
+                        <Dialog.Title>Are you sure to Logout?</Dialog.Title>
+                        <Flex gap="3" mt="4" justify="end">
+                          <Dialog.Close>
+                            <Button variant="soft" color="gray">
+                              Cancel
+                            </Button>
+                          </Dialog.Close>
+                          <Dialog.Close>
+                            <Button onClick={handleLogout}>Logout</Button>
+                          </Dialog.Close>
+                        </Flex>
+                      </Dialog.Content>
+                    </Dialog.Root>
                   </>
                 )}
               </DropdownMenu.Content>
