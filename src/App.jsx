@@ -1,10 +1,11 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import { Container } from "@radix-ui/themes";
+import OneNote from "./pages/OneNote";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/about" element={<About />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/getThisOne/:noteId" element={<OneNote />}></Route>
         </Routes>
       </Container>
     </>

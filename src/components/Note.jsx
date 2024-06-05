@@ -1,4 +1,10 @@
-import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import {
+  ClipboardCopyIcon,
+  OpenInNewWindowIcon,
+  Pencil2Icon,
+  Share1Icon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 import {
   Box,
   Button,
@@ -14,9 +20,17 @@ import {
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteNote, updateNote } from "../store/noteSlice";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const MyCard = styled(Card)`
+  border: 2px solid purple;
+`
+
 
 const Note = ({ title, desc, noteId, _id, showAlert }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [updateTitle, setUpdateTitle] = useState(title);
   const [updateDesc, setUpdateDesc] = useState(desc);
   const handleSubmit = () => {
@@ -31,97 +45,154 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
           desc: updateDesc,
         })
       );
+      showAlert("Note Edited", "green");
     }
   };
 
   return (
     <Box width="150px" m="2">
-      <Card variant="surface" size="2">
-        <Dialog.Root>
-          <Dialog.Trigger>
-            <IconButton size="1" variant="outline">
-              <Pencil2Icon
-                width="15"
-                height="15"
-                style={{ cursor: "pointer" }}
-              />
-            </IconButton>
-          </Dialog.Trigger>
-
-          <Dialog.Content maxWidth="450px">
-            <Dialog.Title>Edit Note</Dialog.Title>
-            <Dialog.Description size="2" mb="4">
-              Make changes to your note.
-            </Dialog.Description>
-            <Flex direction="column" gap="3">
-              <label>
-                <Text as="div" size="2" mb="1" weight="bold">
-                  Title
-                </Text>
-                <TextField.Root
-                  value={updateTitle}
-                  onChange={(e) => setUpdateTitle(e.target.value)}
-                  placeholder="Enter your Title"
+      <MyCard variant="surface" size="2" >
+        {/* Edit Icon */}
+        <Flex align="center" justify="center">
+          <Dialog.Root >
+            <Dialog.Trigger >
+              <IconButton size="1" variant="outline" ml="3">
+                <Pencil2Icon
+                  width="15"
+                  height="15"
+                  style={{ cursor: "pointer" }}
                 />
-              </label>
-              <label>
-                <Text as="div" size="2" mb="1" weight="bold">
-                  Description
-                </Text>
-                <TextArea
-                  value={updateDesc}
-                  onChange={(e) => setUpdateDesc(e.target.value)}
-                  placeholder="Enter your Description"
+              </IconButton>
+            </Dialog.Trigger>
+
+            <Dialog.Content maxWidth="450px">
+              <Dialog.Title>Edit Note</Dialog.Title>
+              <Dialog.Description size="2" mb="4">
+                Make changes to your note.
+              </Dialog.Description>
+              <Flex direction="column" gap="3">
+                <label>
+                  <Text as="div" size="2" mb="1" weight="bold">
+                    Title
+                  </Text>
+                  <TextField.Root
+                    value={updateTitle}
+                    onChange={(e) => setUpdateTitle(e.target.value)}
+                    placeholder="Enter your Title"
+                  />
+                </label>
+                <label>
+                  <Text as="div" size="2" mb="1" weight="bold">
+                    Description
+                  </Text>
+                  <TextArea
+                    value={updateDesc}
+                    onChange={(e) => setUpdateDesc(e.target.value)}
+                    placeholder="Enter your Description"
+                  />
+                </label>
+              </Flex>
+              <Flex gap="3" mt="4" justify="end">
+                <Dialog.Close>
+                  <Button variant="soft" color="gray">
+                    Cancel
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close>
+                  <Button onClick={handleSubmit}>Save</Button>
+                </Dialog.Close>
+              </Flex>
+            </Dialog.Content>
+          </Dialog.Root>
+
+          {/* Delete Icon */}
+          <Dialog.Root>
+            <Dialog.Trigger>
+              <IconButton size="1" variant="outline" mx="4" color="red">
+                <TrashIcon
+                  width="15"
+                  height="15"
+                  color="red"
+                  style={{ cursor: "pointer" }}
                 />
-              </label>
-            </Flex>
-            <Flex gap="3" mt="4" justify="end">
-              <Dialog.Close>
-                <Button variant="soft" color="gray">
-                  Cancel
-                </Button>
-              </Dialog.Close>
-              <Dialog.Close>
-                <Button onClick={handleSubmit}>Save</Button>
-              </Dialog.Close>
-            </Flex>
-          </Dialog.Content>
-        </Dialog.Root>
+              </IconButton>
+            </Dialog.Trigger>
 
-        <Dialog.Root>
-          <Dialog.Trigger>
-            <IconButton size="1" variant="outline" mx="4">
-              <TrashIcon width="15" height="15" style={{ cursor: "pointer" }} />
-            </IconButton>
-          </Dialog.Trigger>
+            <Dialog.Content maxWidth="450px">
+              <Dialog.Title>Are You Sure To Delete?</Dialog.Title>
 
-          <Dialog.Content maxWidth="450px">
-            <Dialog.Title>Are You Sure To Delete?</Dialog.Title>
+              <Flex gap="3" mt="4" justify="end">
+                <Dialog.Close>
+                  <Button variant="soft" color="gray">
+                    Cancel
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close>
+                  <Button
+                  color="red"
+                    onClick={() => {
+                      dispatch(deleteNote({ noteId, _id }));
+                      showAlert("Note Deleted", "green");
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Dialog.Close>
+              </Flex>
+            </Dialog.Content>
+          </Dialog.Root>
 
-            <Flex gap="3" mt="4" justify="end">
-              <Dialog.Close>
-                <Button variant="soft" color="gray">
-                  Cancel
-                </Button>
-              </Dialog.Close>
-              <Dialog.Close>
-                <Button
-                  onClick={() => {
-                    dispatch(deleteNote({ noteId, _id }));
-                  }}
-                >
-                  Delete
-                </Button>
-              </Dialog.Close>
-            </Flex>
-          </Dialog.Content>
-        </Dialog.Root>
+          {/* Share Icon */}
+          <Dialog.Root>
+            <Dialog.Trigger>
+              <IconButton size="1" variant="outline" mx="4" color="green">
+                <Share1Icon
+                  width="15"
+                  height="15"
+                  style={{ cursor: "pointer" }}
+                />
+              </IconButton>
+            </Dialog.Trigger>
+
+            <Dialog.Content maxWidth="450px">
+              <Dialog.Title>Link To This Note</Dialog.Title>
+              <Dialog.Description>{`https://notebook-pb.netlify.app/getThisOne/${_id}`}</Dialog.Description>
+
+              <Flex gap="3" mt="4" justify="end">
+                <Dialog.Close>
+                  <Button
+                    variant="soft"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `https://notebook-pb.netlify.app/getThisOne/${_id}`
+                      );
+                      showAlert("Link Copied To Clipboard", "green");
+                    }}
+                  >
+                    Copy
+                    <ClipboardCopyIcon width="15" height="15" />
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close>
+                  <Button
+                    onClick={() => {
+                      navigate(`/getThisOne/${_id}`);
+                    }}
+                  >
+                    Open
+                    <OpenInNewWindowIcon width="15" height="15" />
+                  </Button>
+                </Dialog.Close>
+              </Flex>
+            </Dialog.Content>
+          </Dialog.Root>
+        </Flex>
 
         <Heading my="3">{title}</Heading>
         <Text as="div" color="gray" size="2">
           {desc}
         </Text>
-      </Card>
+      </MyCard>
     </Box>
   );
 };
