@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/about" element={<About />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/signup" element={<Signup />}></Route>
-          <Route exact path="/getThisOne/:noteId" element={<OneNote />}></Route>
+          <Route path="/getThisOne/:noteId" element={<OneNote />}></Route>
         </Routes>
       </Container>
     </>
