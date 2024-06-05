@@ -20,7 +20,7 @@ import {
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteNote, updateNote } from "../store/noteSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const MyCard = styled(Card)`
@@ -31,6 +31,7 @@ const MyCard = styled(Card)`
 const Note = ({ title, desc, noteId, _id, showAlert }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [updateTitle, setUpdateTitle] = useState(title);
   const [updateDesc, setUpdateDesc] = useState(desc);
   const handleSubmit = () => {
@@ -160,7 +161,7 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
               <TextField.Root
                 size="3"
                 placeholder="Enter Title Here..."
-                value={`https://notebook-pb.netlify.app/getThisOne/${_id}`}
+                value={`https://notebook-pb.vercel.app/note/getThisOne/${_id}`}
                 readOnly
               />
               </form>
@@ -171,7 +172,7 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
                     variant="soft"
                     onClick={() => {
                       navigator.clipboard.writeText(
-                        `https://notebook-pb.netlify.app/getThisOne/${_id}`
+                        `https://notebook-pb.vercel.app/note/getThisOne/${_id}`
                       );
                       showAlert("Link Copied To Clipboard", "green");
                     }}
