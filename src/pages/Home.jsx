@@ -75,6 +75,7 @@ const Home = () => {
     dispatch(createNote({ title: title, desc: desc }));
     setTitle("");
     setDesc("");
+    showAlert("Note Added", "green")
   };
 
   return (

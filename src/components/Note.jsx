@@ -156,7 +156,14 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
 
             <Dialog.Content maxWidth="450px">
               <Dialog.Title>Link To This Note</Dialog.Title>
-              <Dialog.Description>{`https://notebook-pb.netlify.app/getThisOne/${_id}`}</Dialog.Description>
+              <form>
+              <TextField.Root
+                size="3"
+                placeholder="Enter Title Here..."
+                value={`https://notebook-pb.netlify.app/getThisOne/${_id}`}
+                readOnly
+              />
+              </form>
 
               <Flex gap="3" mt="4" justify="end">
                 <Dialog.Close>
