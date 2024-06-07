@@ -94,7 +94,7 @@ const Home = () => {
         </Callout.Root>
       )}
 
-      {isLoading && <Loader />}
+      {isLoading && <Loader text={"Loading"} />}
 
       {/* is not laoding then show home page content */}
       {!isLoading && (

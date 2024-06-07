@@ -53,6 +53,7 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
   return (
     <Box width="150px" m="2">
       <MyCard variant="surface" size="2" >
+
         {/* Edit Icon */}
         <Flex align="center" justify="center">
           <Dialog.Root >
@@ -143,8 +144,10 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
             </Dialog.Content>
           </Dialog.Root>
 
-          {/* Share Icon */}
-          <Dialog.Root>
+          {/* Share Icon 
+              This feature didn't work well so I had to remove it...read more about it in OneNote.jsx component
+          */}
+          {/* <Dialog.Root>
             <Dialog.Trigger>
               <IconButton size="1" variant="outline" mx="4" color="green">
                 <Share1Icon
@@ -193,7 +196,7 @@ const Note = ({ title, desc, noteId, _id, showAlert }) => {
                 </Dialog.Close>
               </Flex>
             </Dialog.Content>
-          </Dialog.Root>
+          </Dialog.Root> */}
         </Flex>
 
         <Heading my="3">{title}</Heading>

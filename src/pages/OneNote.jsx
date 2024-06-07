@@ -1,4 +1,8 @@
-import { Box, Card, Flex, Heading, Separator } from "@radix-ui/themes";
+//This feature had a bug that when we open the shared link externally, it simply said page not found. IDK if this bug was related to the frontend hosting platform or my own code, although I even migrated my hosting platform from Netlify to Vercel but it didn't seem to help me
+
+// So...I am detaching this feature :)
+
+import { Card, Flex, Heading, Separator } from "@radix-ui/themes";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
