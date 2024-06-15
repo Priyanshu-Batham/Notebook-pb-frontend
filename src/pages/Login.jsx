@@ -40,7 +40,7 @@ const Login = () => {
       email: email,
       password: password.toString(),
     };
-    const url = `https://notebook-pb-backend.onrender.com/user/login`;
+    const url = `http://13.201.94.159/user/login`;
     setIsLoading(true);
     fetch(url, {
       method: "Post",
