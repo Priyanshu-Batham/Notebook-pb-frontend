@@ -31,6 +31,7 @@ const Home = () => {
             "Content-Type": "application/json",
             authToken: token,
           },
+          referrerPolicy: "unsafe-url"
         })
           .then((res) => {
             console.log(res);
