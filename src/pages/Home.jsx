@@ -24,14 +24,14 @@ const Home = () => {
       //if token is found then we fetch his notes
       else {
         setIsLoading(true);
-        const url = "http://13.201.94.159/note/read";
+        const url = "https://notebook-pb-backend.onrender.com/note/read";
         fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             authToken: token,
           },
-          // referrerPolicy: "unsafe-url"
+          referrerPolicy: "unsafe-url"
         })
           .then((res) => {
             console.log(res);
