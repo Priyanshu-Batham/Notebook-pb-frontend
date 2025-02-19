@@ -1,6 +1,6 @@
 //This feature had a bug that when we open the shared link externally, it simply said page not found. IDK if this bug was related to the frontend hosting platform or my own code, although I even migrated my hosting platform from Netlify to Vercel but it didn't seem to help me
-
 // So...I am detaching this feature :)
+//Update: 
 
 import { Card, Flex, Heading, Separator } from "@radix-ui/themes";
 import React, { useState, useEffect } from "react";
@@ -38,7 +38,7 @@ const OneNote = () => {
       //if token is found then we fetch his notes
       if (token) {
         setIsLoading(true);
-        let url = "https://notebook-pb-backend.onrender.com/note/read";
+        let url = "http://15.206.92.142/note/read";
         fetch(url, {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ const OneNote = () => {
     }
 
     //now fetch the specific note
-    let url = `https://notebook-pb-backend.onrender.com/note/getThisOne/${params.noteId}`;
+    let url = `http://15.206.92.142/note/getThisOne/${params.noteId}`;
       setIsLoading(true);
       fetch(url, {
         method: "GET",

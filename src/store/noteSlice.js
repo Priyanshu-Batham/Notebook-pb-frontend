@@ -19,7 +19,7 @@ export const noteSlice = createSlice({
       };
 
       //hitting the createNote endpoint and getting a unique noteId
-      const url = "https://notebook-pb-backend.onrender.com/note/create";
+      const url = "http://15.206.92.142/note/create";
       const token = localStorage.getItem("authToken");
       fetch(url, {
         method: "POST",
@@ -51,7 +51,7 @@ export const noteSlice = createSlice({
         description: desc,
         tag: "",
       };
-      const url = `https://notebook-pb-backend.onrender.com/note/update${_id}`;
+      const url = `http://15.206.92.142/note/update${_id}`;
       const token = localStorage.getItem("authToken");
       fetch(url, {
         method: "PUT",
@@ -74,7 +74,7 @@ export const noteSlice = createSlice({
 
     deleteNote: (state, action) => {
       const { noteId, _id } = action.payload;
-      const url = `https://notebook-pb-backend.onrender.com/note/delete${_id}`;
+      const url = `http://15.206.92.142/note/delete${_id}`;
       const token = localStorage.getItem("authToken");
       fetch(url, {
         method: "DELETE",

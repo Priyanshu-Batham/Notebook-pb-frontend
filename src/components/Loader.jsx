@@ -9,7 +9,7 @@ const Loader = (props) => {
         <Spinner size="3" />
       </Flex>
       <Box maxWidth="500px" style={{ margin: "auto" }}>
-        <Progress duration="60s" size="3" />
+        <Progress duration="1s" size="3" />
       </Box>
     </Box>
   );

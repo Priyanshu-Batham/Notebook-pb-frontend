@@ -1,5 +1,15 @@
-import { ExclamationTriangleIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import { Box, Button, Callout, Heading, TextArea, TextField } from "@radix-ui/themes";
+import {
+  ExclamationTriangleIcon,
+  PlusCircledIcon,
+} from "@radix-ui/react-icons";
+import {
+  Box,
+  Button,
+  Callout,
+  Heading,
+  TextArea,
+  TextField,
+} from "@radix-ui/themes";
 import NotesContainer from "../components/NotesContainer";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,14 +34,13 @@ const Home = () => {
       //if token is found then we fetch his notes
       else {
         setIsLoading(true);
-        const url = "https://notebook-pb-backend.onrender.com/note/read";
+        const url = "http://15.206.92.142/note/read";
         fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             authToken: token,
           },
-          referrerPolicy: "unsafe-url"
         })
           .then((res) => {
             console.log(res);
@@ -69,13 +78,39 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.length < 1 || desc.length < 1) {
-      showAlert("Title And Description Should Not be Empty", "red")
+      showAlert("Title And Description Should Not be Empty", "red");
       return;
     }
     dispatch(createNote({ title: title, desc: desc }));
     setTitle("");
     setDesc("");
-    showAlert("Note Added", "green")
+    showAlert("Note Added", "green");
+    const url = "http://15.206.92.142/note/read";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authToken: token,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((data) => {
+        if (data) {
+          data.map((note) => {
+            note.noteId = nanoid();
+          });
+          dispatch(setAllNotes({ notes: data }));
+          dispatch(logInUser());
+          setIsLoading(false);
+          console.log(data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -131,7 +166,7 @@ const Home = () => {
             </Button>
           </form>
 
-          <NotesContainer showAlert={showAlert}/>
+          <NotesContainer showAlert={showAlert} />
         </Box>
       )}
     </>

@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import { Container } from "@radix-ui/themes";
+import OneNote from "./pages/OneNote";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/about" element={<About />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/signup" element={<Signup />}></Route>
+          <Route exact path="/sharenote/:noteId" element={<OneNote />}></Route>
         </Routes>
       </Container>
     </>

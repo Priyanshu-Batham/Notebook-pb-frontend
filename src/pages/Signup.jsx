@@ -42,7 +42,7 @@ const Signup = () => {
       email: email,
       password: password,
     };
-    const url = `https://notebook-pb-backend.onrender.com/user/signup`;
+    const url = `http://15.206.92.142/user/signup`;
     setIsLoading(true);
     fetch(url, {
       method: "Post",
